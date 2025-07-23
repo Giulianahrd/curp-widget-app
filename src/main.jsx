@@ -1,26 +1,26 @@
 import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { ThemeProvider, createTheme, responsiveFontSizes } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 
-const prometeoTheme = createTheme({
+let prometeoTheme = createTheme({ 
   palette: {
     primary: {
       main: '#DC3545',
-      light: '#E57373', 
-      dark: '#A52A2A',  
-      contrastText: '#fff', 
+      light: '#E57373',
+      dark: '#A52A2A',
+      contrastText: '#fff',
     },
     secondary: {
-      main: '#333333', 
+      main: '#333333',
       light: '#666666',
       dark: '#000000',
       contrastText: '#fff',
     },
     background: {
-      default: '#f0f2f5', 
-      paper: '#ffffff', 
+      default: '#f0f2f5',
+      paper: '#ffffff',
     },
     text: {
       primary: '#474747',
@@ -123,6 +123,8 @@ const prometeoTheme = createTheme({
   },
 })
 
+prometeoTheme = responsiveFontSizes(prometeoTheme);
+
 function CssVariablesInjector() {
   useEffect(() => {
     const root = document.documentElement
@@ -137,6 +139,7 @@ function CssVariablesInjector() {
     root.style.setProperty('--mui-palette-background-paper', prometeoTheme.palette.background.paper)
     root.style.setProperty('--mui-palette-text-primary', prometeoTheme.palette.text.primary)
     root.style.setProperty('--mui-palette-text-secondary', prometeoTheme.palette.text.secondary)
+    
     root.style.setProperty('--color-dark-background', '#2E2E2E')
     root.style.setProperty('--color-light-grey-background', '#f0f0f0')
     root.style.setProperty('--color-light-hover', '#f3f2f2')
@@ -151,7 +154,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider theme={prometeoTheme}>
       <CssBaseline />
-      <CssVariablesInjector /> 
+      <CssVariablesInjector />
       <App />
     </ThemeProvider>
   </React.StrictMode>,

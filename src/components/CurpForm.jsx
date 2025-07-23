@@ -42,6 +42,7 @@ function CurpForm({ onSubmit }) {
                 flexDirection: 'column',
                 gap: 2.5, 
                 padding: 3,
+                paddingTop: 1,
                 borderRadius: 2, 
                 bgcolor: 'background.paper',         
                 mt: 2.5,
@@ -68,9 +69,9 @@ function CurpForm({ onSubmit }) {
                 disabled={!curp || !!error} 
                 sx={{
                     padding: '14px 25px',
-                    fontSize: '1.15em',
+                    fontSize: '.9em',
                     fontWeight: 600,
-                    mt: 2, // margin-top: 16px
+                    mt: 2, 
                     boxShadow: '0 4px 10px rgba(220, 53, 69, 0.3)',
                     borderRadius: '4rem'
                 }}

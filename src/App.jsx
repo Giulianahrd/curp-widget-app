@@ -63,15 +63,17 @@ function App() {
                     aria-label="consultar por curp"
                     className={currentForm === 'curp' ? 'active' : ''} 
                 >
-                    Consultar por CURP
+                    <span className="long-text">Consultar por CURP</span>
+                    <span className="short-text">CURP</span>
                 </ToggleButton>
                 <ToggleButton
                     value="personal"
                     aria-label="consultar por datos personales"
                     className={currentForm === 'personal' ? 'active' : ''} 
                 >
-                    Consultar por datos personales
-                </ToggleButton>
+                    <span className="long-text">Consultar por Datos Personales</span>
+                    <span className="short-text">DATOS PERSONALES</span>
+                 </ToggleButton>
             </ToggleButtonGroup>
 
             {loading && <LoadingSpinner />} 

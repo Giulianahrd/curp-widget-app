@@ -25,6 +25,60 @@ React fue elegido para este proyecto por varias razones:
 - **Interfaz de usuario dinámica:** Facilita la creación de una interfaz de usuario interactiva y dinámica.
 - **Ecosistema robusto:** La integración con Material-UI proporciona un conjunto de componentes UI, acelerando el desarrollo y asegurando un diseño coherente.
 
+## 📦 Instrucciones de ejecución local
+
+Para ejecutar este proyecto en un entorno de desarrollo local:
+
+1. **Clona el repositorio:**
+    
+    ```
+    git clone https://github.com/Giulianahrd/curp-widget-app.git
+    cd curp-widget-app
+    ```
+    
+2. **Instala las dependencias:**
+    
+    ```
+    npm install
+    ```
+    
+3. **Configura tu clave de API de Prometeo:**
+Crea un archivo `.env` en la raíz de tu proyecto y añade tu clave de API:
+    
+    ```
+    VITE_PROMETEO_API_KEY=tu_clave_de_api_aqui
+    ```
+    
+    *(Reemplaza `tu_clave_de_api_aqui` con tu clave real de Prometeo.)*
+    
+4. **Inicia el servidor de desarrollo:**
+    
+    ```
+    npm run dev
+    ```
+    
+    La aplicación se abrirá en tu navegador en `http://localhost:4000` (o el puerto que hayas configurado en `vite.config.js`).
+    
+
+## 🌐 Instrucciones de embebido (iframe)
+
+Este widget está diseñado para ser fácilmente incrustado en cualquier página web utilizando un `<iframe>`.
+
+**URL Pública de la Aplicación Desplegada:** https://curp-widget.netlify.app/
+
+**Ejemplo de código para embeber:**
+
+```
+<iframe
+  src="https://curp-widget.netlify.app/"
+  width="600px"
+  height="600px"
+  frameborder="0"
+  style="border: none; border-radius: 16px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);"
+  title="Widget de Verificación de CURP"
+></iframe>
+```
+
 ## 📁 Estructura del proyecto
 
 ```

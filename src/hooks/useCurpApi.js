@@ -1,5 +1,27 @@
 import { useState, useCallback } from 'react'
 
+const saveCurpToLocalStorage = (curp) => {
+    try {
+        const storedCurps = JSON.parse(localStorage.getItem('savedCurps')) || []
+        if (curp && !storedCurps.includes(curp) && curp.length === 18) {
+            const newCurps = [curp, ...storedCurps.slice(0, 9)]
+            localStorage.setItem('savedCurps', JSON.stringify(newCurps))
+        }
+    } catch (e) {
+            setError(`Error al guardar historial de CURP: ${e.message}`)
+    }
+}
+
+const getSavedCurpsFromLocalStorage = () => {
+    try {
+        const storedCurps = JSON.parse(localStorage.getItem('savedCurps')) || []
+        return storedCurps
+    } catch (e) {
+            setError(`Error al cargar historial de CURP: ${e.message}`)
+        return []
+    }
+}
+
 export const useCurpApi = () => {
     const [data, setData] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -13,37 +35,13 @@ export const useCurpApi = () => {
         setLoading(false)
     }, [])
 
-    // Función auxiliar interna para guardar CURPs en localStorage
-    const saveCurpToLocalStorage = useCallback((curp) => {
-        try {
-            const storedCurps = JSON.parse(localStorage.getItem('savedCurps')) || []
-            if (curp && !storedCurps.includes(curp) && curp.length === 18) {
-                const newCurps = [curp, ...storedCurps.slice(0, 9)]
-                localStorage.setItem('savedCurps', JSON.stringify(newCurps))
-            }
-        } catch (e) {
-            setError(`Error al guardar historial de CURP: ${e.message}`)
-        }
-    }, [setError])
-
-    const getSavedCurpsFromLocalStorage = useCallback(() => {
-        try {
-            const storedCurps = JSON.parse(localStorage.getItem('savedCurps')) || []
-            return storedCurps
-        } catch (e) {
-            setError(`Error al cargar historial de CURP: ${e.message}`)
-            return []
-        }
-    }, [setError])
-
-    const fetchData = useCallback(async (url, body) => {
+    const fetchData = useCallback(async (endpoint, body) => {
         setLoading(true)
         setError(null)
         try {
-            const response = await fetch(url, {
+            const response = await fetch(`/.netlify/functions/prometeo-proxy${endpoint}`, {
                 method: 'POST',
                 headers: {
-                    'X-API-Key': API_KEY,
                     'accept': 'application/json',
                     'content-type': 'application/x-www-form-urlencoded',
                 },
@@ -53,7 +51,7 @@ export const useCurpApi = () => {
             const result = await response.json()
 
             if (!response.ok) {
-                const errorMessage = result.detail || result.message || 'Error al consultar el CURP.'
+                const errorMessage = result.detail || result.message || 'Error desconocido al consultar el CURP.'
                 setError(errorMessage)
                 setData(null)
                 return null
@@ -82,20 +80,20 @@ export const useCurpApi = () => {
         } finally {
             setLoading(false)
         }
-    }, [API_KEY, saveCurpToLocalStorage, setError]) 
+    }, [saveCurpToLocalStorage, setError]) 
 
     const consultCurp = useCallback((curpValue) => {
-        const url = '/api/query' 
-        return fetchData(url, `curp=${curpValue}`)
+        const endpoint = '/curp/query'
+        return fetchData(endpoint, `curp=${curpValue}`)
     }, [fetchData])
 
     const consultPersonalData = useCallback((personalData) => {
-        const url = '/api/reverse-query' 
+        const endpoint = '/curp/reverse-query'
         const params = new URLSearchParams()
         for (const key in personalData) {
           params.append(key, personalData[key])
         }
-        return fetchData(url, params.toString())        
+        return fetchData(endpoint, params.toString())        
     }, [fetchData])
       
     return { data, loading, error, consultCurp, consultPersonalData, resetState, getSavedCurpsFromLocalStorage }

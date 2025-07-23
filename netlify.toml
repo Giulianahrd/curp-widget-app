@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build" # Comando para compilar tu aplicación Vite
+  publish = "dist"          # La carpeta donde Vite genera los archivos estáticos
+
+[functions]
+  directory = "netlify/functions" # Donde se encuentran tus funciones sin servidor
+
+# Redirecciones para tu SPA (Single Page Application)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

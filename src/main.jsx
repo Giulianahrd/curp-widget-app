@@ -151,7 +151,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider theme={prometeoTheme}>
       <CssBaseline />
-      <CssVariablesInjector /> {/* ¡Añade este componente! */}
+      <CssVariablesInjector /> 
       <App />
     </ThemeProvider>
   </React.StrictMode>,
